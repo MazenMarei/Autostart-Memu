@@ -96,8 +96,11 @@ export default class EmemuC {
           }
           if (stdout) {
             console.log(stdout);
-            
-            resolve(stdout.toString().trim().toLocaleLowerCase() == "Running".toLocaleLowerCase());
+
+            resolve(
+              stdout.toString().trim().toLocaleLowerCase() ==
+                "Running".toLocaleLowerCase()
+            );
           }
         }
       );
@@ -115,16 +118,17 @@ export default class EmemuC {
 
     for (let index = 0; index < lists.length; index++) {
       const item = lists[index];
+      if (index === 0) break;
       const command = `memuc start -i ${item.index}`;
       const isRunning = await this.checkEmulatorIsRunning({
         index: item.index,
       });
-      
+
       if (isRunning) {
         console.log(`Emulator ${item.index} is already running`);
         break;
       }
-      return new Promise((resolve, reject) => {
+      await new Promise((resolve, reject) => {
         sudo.exec(
           command,
           { name: `Start emulator ${item.index}` },
