@@ -1,0 +1,20 @@
+{
+  "name": "autostart-memu",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "sudo-prompt": "^9.2.1",
+    "winreg": "^1.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "@types/winreg": "^1.2.36"
+  }
+}
