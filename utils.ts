@@ -95,8 +95,6 @@ export default class EmemuC {
             return reject(error);
           }
           if (stdout) {
-            console.log(stdout);
-
             resolve(
               stdout.toString().trim().toLocaleLowerCase() ==
                 "Running".toLocaleLowerCase()
@@ -128,7 +126,7 @@ export default class EmemuC {
       if (isRunning) {
         console.log(`Emulator ${item.index} is already running`);
         continue;
-      } else console.log(`Emulator ${item.index} is not running`);
+      } 
       
       await new Promise((resolve, reject) => {
         sudo.exec(
@@ -144,6 +142,6 @@ export default class EmemuC {
         );
       });
     }
-    console.log("All emulators started");
+    console.log("All emulators is running");
   }
 }
