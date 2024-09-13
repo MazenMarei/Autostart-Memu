@@ -21,6 +21,6 @@ import EmemuC from "./utils";
 
   while (true) {
     console.log(emulatorList);
-    await memuC.runShutOffEmulators({ lists: emulatorList , delay : 1 * 60 * 1000});  
+    await memuC.runShutOffEmulators({ lists: emulatorList , delay : 5 * 60 * 1000});  
   }
 })();
