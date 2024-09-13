@@ -118,7 +118,8 @@ export default class EmemuC {
 
     for (let index = 0; index < lists.length; index++) {
       const item = lists[index];
-      if (index === 0) break;
+      if (index === 0) continue;
+      
       const command = `memuc start -i ${item.index}`;
       const isRunning = await this.checkEmulatorIsRunning({
         index: item.index,
@@ -126,8 +127,9 @@ export default class EmemuC {
 
       if (isRunning) {
         console.log(`Emulator ${item.index} is already running`);
-        break;
-      }
+        continue;
+      } else console.log(`Emulator ${item.index} is not running`);
+      
       await new Promise((resolve, reject) => {
         sudo.exec(
           command,
