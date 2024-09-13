@@ -82,7 +82,9 @@ export default class EmemuC {
       );
     });
   }
-
+  async delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
   async checkEmulatorIsRunning({ index }: { index: number }): Promise<Boolean> {
     const command = `memuc isvmrunning -i ${index}`;
     return new Promise((resolve, reject) => {
@@ -106,8 +108,10 @@ export default class EmemuC {
   }
   async runShutOffEmulators({
     lists,
+    delay,
   }: {
     lists: { index: number; status: Boolean }[];
+    delay?: number;
   }) {
     if (!lists || lists.length === 0) {
       console.error("No emulator list provided");
@@ -116,7 +120,7 @@ export default class EmemuC {
 
     for (let index = 0; index < lists.length; index++) {
       const item = lists[index];
-      if (index === 0) continue;
+      if (item.index === 0) continue;
 
       const command = `memuc start -i ${item.index}`;
       const isRunning = await this.checkEmulatorIsRunning({
@@ -128,6 +132,11 @@ export default class EmemuC {
         continue;
       }
 
+      if (delay) {
+        console.log(`waiting for ${delay / (60 * 1000)} minutes`);
+        await this.delay(delay);
+        console.log(`${delay / (60 * 1000)}  minutes passed`);
+      }
       await new Promise(async (resolve, reject) => {
         sudo.exec(
           command,
@@ -137,12 +146,7 @@ export default class EmemuC {
               console.error(error);
             }
             console.log(`Emulator ${item.index} started`);
-            await new Promise((resolveWait) =>
-              setTimeout(() => {
-                resolveWait(true);
-                resolve(true);
-              }, 5 * 60 * 1000)
-            );
+            resolve(true);
           }
         );
       });

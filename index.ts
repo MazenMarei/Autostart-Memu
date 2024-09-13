@@ -14,10 +14,13 @@ import EmemuC from "./utils";
   }
   console.log("MEmu is installed");
 
+  console.log("Checking emulators status");
+  const emulatorList = await memuC.getEmulatorsStatus();
+  console.log(emulatorList);
+  await memuC.runShutOffEmulators({ lists: emulatorList });
+
   while (true) {
-    console.log("Checking emulators status");
-    const emulatorList = await memuC.getEmulatorsStatus();
     console.log(emulatorList);
-    await memuC.runShutOffEmulators({ lists: emulatorList });
+    await memuC.runShutOffEmulators({ lists: emulatorList , delay : 1 * 60 * 1000});  
   }
 })();
