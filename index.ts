@@ -1,7 +1,8 @@
 import EmemuC from "./utils";
 
 (async () => {
-  const memuC = new EmemuC();
+  try {   
+    const memuC = new EmemuC();
 
   // * Check if MEmu is installed
   const isInstalled = await memuC.checkEmemuC();
@@ -22,5 +23,8 @@ import EmemuC from "./utils";
   while (true) {
     console.log(emulatorList);
     await memuC.runShutOffEmulators({ lists: emulatorList , delay : 5 * 60 * 1000});  
+  }
+} catch (error) {
+    console.log("error " + error);
   }
 })();
