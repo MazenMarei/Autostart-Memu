@@ -1,6 +1,6 @@
 import WinReg from "winreg";
 import sudo from "sudo-prompt";
-import { exec } from "child_process";
+import { exec , execSync} from "child_process";
 
 export default class EmemuC {
   memucPath: string = "C:\\Program Files\\Microvirt\\MEmu";
@@ -15,12 +15,17 @@ export default class EmemuC {
     return new Promise((resolve, reject) => {
       regKey.get("Path", (err, item) => {
         if (err) {
-          return reject(err);
+          return resolve(false);
         }
         if (item) {
           this.currentPath = item.value;
           if (item.value.includes(this.memucPath)) {
-            resolve(true);
+
+            let cmd = execSync("memuc");
+           if(cmd) {
+            if (cmd.includes("is not recognized")) resolve(false);
+            else resolve(true)
+           } else resolve(false)
           } else {
             resolve(false);
           }
@@ -66,7 +71,7 @@ export default class EmemuC {
         { name: "get emulators list" },
         (error, stdout, stderr) => {
           if (error) {
-            console.error("Error: ", error);
+            console.error("Error: ");
             return reject(error);
           }
           if (stdout) {
