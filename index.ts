@@ -26,7 +26,7 @@ import config from "./config";
   if(config.numberOFDevices === "auto") {
     emulatorList = await memuC.getEmulatorsStatus();
   } else {
-    emulatorList = Array.from({ length: config.numberOFDevices }, (_, i) => ({
+    emulatorList = Array.from({ length: parseInt(config.numberOFDevices) }, (_, i) => ({
       index: i,
       status: false,
     }));

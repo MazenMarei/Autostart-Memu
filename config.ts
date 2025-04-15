@@ -5,6 +5,6 @@ interface Config {
 
 
 export default  {
-    numberOFDevices: "auto",
+    numberOFDevices: "auto", // or type a number
     delay: 1000 * 60 * 5,
 } satisfies Config;
